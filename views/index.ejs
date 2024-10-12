@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <title>Fluxo de Caixa Node.js</title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Fluxo de Caixa <span class="text-primary">Node.js</span></h1>
+    <hr>
+
+    <div class="row text-center mb-5">
+      <div class="col-md-4">
+        <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+          <b>Valor Total</b><br>
+          <span id="valorTotal" class="display-6"><%= formatarMoeda(valor_total) %></span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+          <b>Receitas</b><br>
+          <span id="receitas" class="display-6 text-success"><%= formatarMoeda(receitas) %></span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+          <b>Despesas</b><br>
+          <span id="despesas" class="display-6 text-danger"><%= formatarMoeda(despesas) %></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dvSerach mb-5 d-flex justify-content-between align-items-center">
+      <form action="/" class="w-75">
+        <input type="text" placeholder="Digite algo..." class="form-control mb-2" name="tipo">
+        <button type="submit" class="btn btn-primary w-100">Buscar</button>
+      </form>
+      <div class="ml-3">
+        <a href="/adicionar" class="btn btn-success btn-lg">Adicionar</a>
+      </div>
+    </div>
+
+    <div class="dvTabela">
+      <table class="table table-striped table-hover table-bordered shadow-sm">
+        <thead class="table-dark">
+          <tr>
+            <th>Tipo</th>
+            <th>Valor</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (const lancamento of extrato) { %>
+            <tr>
+              <td><%= lancamento.tipo %></td>
+              <td><%= formatarMoeda(lancamento.valor) %></td>
+              <td style="background-color: <%= corStatus(lancamento.status) %>;">
+                <%= formatarStatus(lancamento.status) %>
+              </td>
+              <td style="width: 20px;">
+                <a href="/excluir/<%= lancamento.id %>" onclick="return confirm('Confirma?')" class="btn btn-danger btn-sm">
+                  Excluir
+                </a>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
